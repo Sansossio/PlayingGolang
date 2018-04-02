@@ -1,3 +1,3 @@
 # Tries algorithm
 
-![../resources/trieds.png](../resources/trieds.png)
+![../resources/tries.png](../resources/tries.png)

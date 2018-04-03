@@ -40,6 +40,8 @@ func (st *MyStack) Pop() interface{} {
 	previous := st.top.previous
 	// Change top
 	st.top = previous
+	// Decrease
+	st.length--
 	// Return
 	return myValue
 }

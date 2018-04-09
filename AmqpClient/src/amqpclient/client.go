@@ -59,13 +59,13 @@ func subscribe(queue string, consumer *Consumer) {
 	go loopHandler(receiver, ch)
 	// Log
 	if !subscribeLog {
-		// Print
-		fmt.Printf("Subscribed to topics\n")
 		// Properties
 		subscribeLog = true
 		// Control time
 		start = time.Now()
 		totalTime = time.Now()
+		// Print
+		fmt.Printf("Subscribed to topics\n")
 	}
 	// Properties
 	handlerErr := <-ch
@@ -111,6 +111,7 @@ func connect(consumer *Consumer) error {
 	// Create client
 	client, err := amqp.Dial("amqp://localhost",
 		amqp.ConnSASLPlain("access-key-name", "access-key"),
+		amqp.ConnIdleTimeout(30*time.Hour),
 	)
 	if err != nil {
 		return err

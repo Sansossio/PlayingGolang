@@ -4,6 +4,7 @@ package main
 // Imports
 import (
 	"fmt"
+	"runtime"
 
 	"./amqpclient"
 )
@@ -22,7 +23,7 @@ var (
 // Main
 func main() {
 	// Log
-	fmt.Printf("Starting system\n")
+	fmt.Printf("AmqpClient on %s with architecture: %s\n", runtime.GOOS, runtime.GOARCH)
 	// Properties
 	amqpclient.SetProperties(listeners, msgs, printInterval)
 	// Start listeners

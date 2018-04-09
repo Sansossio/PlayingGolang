@@ -1,6 +1,7 @@
 # Testing amqp queues
 
-## Some result:
+### Some result
+ActiveMQ
 ```sh
 Connected to amqp server
 Subscribed to topics

@@ -100,7 +100,7 @@ func msgHandler(msg *amqp.Message) {
 	msgToString := string(msg.GetData())
 	msgToInt, _ := strconv.Atoi(msgToString)
 	// Validate
-	if msgToInt%printInterval == 0 {
+	if msgToInt == msgt || msgToInt%printInterval == 0 {
 		// Print time
 		printTime(msgToInt) // Print
 	}

@@ -11,7 +11,7 @@ import (
 
 // Properties
 var (
-	listeners     = 8
+	listeners     = runtime.NumCPU()
 	msgs          = 300000
 	printInterval = 50000
 	queues        = []string{
@@ -23,7 +23,7 @@ var (
 // Main
 func main() {
 	// Log
-	fmt.Printf("AmqpClient on %s with architecture: %s\n", runtime.GOOS, runtime.GOARCH)
+	fmt.Printf("AmqpClient on %s with architecture: %s routines: %d\n", runtime.GOOS, runtime.GOARCH, listeners)
 	// Properties
 	amqpclient.SetProperties(listeners, msgs, printInterval)
 	// Start listeners

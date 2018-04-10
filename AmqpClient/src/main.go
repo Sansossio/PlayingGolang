@@ -23,7 +23,7 @@ var (
 // Main
 func main() {
 	// Log
-	fmt.Printf("AmqpClient on %s with architecture: %s routines: %d\n", runtime.GOOS, runtime.GOARCH, listeners)
+	fmt.Printf("AmqpClient on %s with architecture: %s over routines: %d\n", runtime.GOOS, runtime.GOARCH, listeners)
 	// Properties
 	amqpclient.SetProperties(listeners, msgs, printInterval)
 	// Start listeners

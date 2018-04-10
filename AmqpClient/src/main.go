@@ -14,6 +14,7 @@ import (
 // Properties
 var (
 	subscribedLog, connectedLog bool
+	messageAsync                = true
 	listeners                   = runtime.NumCPU()
 	msgs                        = 300000
 	printInterval               = 50000
@@ -64,7 +65,7 @@ func startListeners() {
 	// Properties
 	results.SetProperties(msgs, printInterval)
 	// Start listeners
-	amqpclient.StartListeners(queues, listeners, onMessage, onEvent)
+	amqpclient.StartListeners(queues, listeners, onMessage, onEvent, messageAsync)
 }
 
 // Main

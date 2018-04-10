@@ -8,8 +8,7 @@ import (
 // SetProperties Set need properties
 func SetProperties(m, pt int) {
 	// Properties
-	totalMsg = m       // Total messages to process
-	printInterval = pt // Print interval
+	totalMsg, printInterval = m, pt
 }
 
 // PrintTime Print proccess time

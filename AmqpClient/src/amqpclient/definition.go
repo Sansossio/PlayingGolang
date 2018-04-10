@@ -16,6 +16,7 @@ type Consumer struct {
 // Global properties
 var (
 	ctx             context.Context
+	messageAsync bool
 	messageCallback func(string, string)
 	eventCallback   func(string)
 )

@@ -34,19 +34,16 @@ func listener(consumer *Consumer) *Consumer {
 
 // CreateConsumer Create new empty consumer
 func createConsumer(id int, queues []string) Consumer {
-	// Aux
-	var consumer Consumer
-	// Add
-	consumer.queue = queues
+	// Consumer
+	consumer := Consumer{queue: queues}
 	// Return
 	return consumer
 }
 
 // StartListeners Start new listeners
-func StartListeners(queues []string, total int, onMessage func(string, string), onEvent func(string)) {
-	// Callbacks
-	messageCallback = onMessage
-	eventCallback = onEvent
+func StartListeners(queues []string, total int, onMessage func(string, string), onEvent func(string), ca bool) {
+	// Properties
+	messageAsync, messageCallback, eventCallback = ca, onMessage, onEvent
 	// Loop
 	for i := 0; i < total; i++ {
 		// Create new instance

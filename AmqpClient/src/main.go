@@ -13,18 +13,14 @@ import (
 
 // Properties
 var (
-	listeners     = runtime.NumCPU()
-	msgs          = 300000
-	printInterval = 50000
-	queues        = []string{
+	subscribedLog, connectedLog bool
+	listeners                   = runtime.NumCPU()
+	msgs                        = 300000
+	printInterval               = 50000
+	queues                      = []string{
 		"Consumer.go.VirtualTopic.queue-one",
 		"Consumer.go.VirtualTopic.queue-two",
 	}
-)
-
-// Boolean properties
-var (
-	subscribedLog, connectedLog bool
 )
 
 // Message callback
@@ -63,14 +59,20 @@ func onEvent(event string) {
 	}
 }
 
-// Main
-func main() {
-	// Log
-	fmt.Printf("AmqpClient on %s with architecture: %s over routines: %d\n", runtime.GOOS, runtime.GOARCH, listeners)
+// Amqp listeners
+func startListeners() {
 	// Properties
 	results.SetProperties(msgs, printInterval)
 	// Start listeners
 	amqpclient.StartListeners(queues, listeners, onMessage, onEvent)
+}
+
+// Main
+func main() {
+	// Log
+	fmt.Printf("AmqpClient on %s with architecture: %s over routines: %d\n", runtime.GOOS, runtime.GOARCH, listeners)
+	// Liteners
+	startListeners()
 	// Scan
 	fmt.Scanln()
 }

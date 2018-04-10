@@ -2,9 +2,7 @@ package amqpclient
 
 import (
 	"context"
-	"fmt"
 	"log"
-	"strconv"
 	"time"
 
 	"pack.ag/amqp"
@@ -56,17 +54,9 @@ func subscribe(queue string, consumer *Consumer) {
 	// Channel
 	ch := make(chan error)
 	// Handler
-	go loopHandler(receiver, ch)
-	// Log
-	if !subscribeLog {
-		// Properties
-		subscribeLog = true
-		// Control time
-		start = time.Now()
-		totalTime = time.Now()
-		// Print
-		fmt.Printf("Subscribed to topics\n")
-	}
+	go loopHandler(receiver, queue, ch)
+	// Callback
+	go eventCallback("SUBSCRIBED")
 	// Properties
 	handlerErr := <-ch
 	// Comprobe
@@ -77,7 +67,7 @@ func subscribe(queue string, consumer *Consumer) {
 }
 
 // Handler
-func loopHandler(receiver *amqp.Receiver, channel chan error) {
+func loopHandler(receiver *amqp.Receiver, topic string, channel chan error) {
 	// Infinite loop
 	for {
 		// Receive next message
@@ -89,20 +79,10 @@ func loopHandler(receiver *amqp.Receiver, channel chan error) {
 		}
 		// Accept message
 		msg.Accept()
+		// Parse data
+		msgToString := string(msg.GetData())
 		// Handler
-		go msgHandler(msg)
-	}
-}
-
-// MsgHandler
-func msgHandler(msg *amqp.Message) {
-	// Parse data
-	msgToString := string(msg.GetData())
-	msgToInt, _ := strconv.Atoi(msgToString)
-	// Validate
-	if msgToInt == msgt || msgToInt%printInterval == 0 {
-		// Print time
-		printTime(msgToInt) // Print
+		go messageCallback(topic, msgToString)
 	}
 }
 
@@ -128,13 +108,8 @@ func connect(consumer *Consumer) error {
 	// Consumer
 	consumer.session = session
 	consumer.client = client
-	// Log
-	if !connectedLog {
-		// Print
-		fmt.Printf("Connected to amqp server\n")
-		// Properties
-		connectedLog = true
-	}
+	// Callback
+	go eventCallback("CONNECTED")
 	// Return
 	return nil
 }

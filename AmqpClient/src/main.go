@@ -5,8 +5,10 @@ package main
 import (
 	"fmt"
 	"runtime"
+	"strconv"
 
 	"./amqpclient"
+	"./results"
 )
 
 // Properties
@@ -20,14 +22,55 @@ var (
 	}
 )
 
+// Boolean properties
+var (
+	subscribedLog, connectedLog bool
+)
+
+// Message callback
+func onMessage(topic, message string) {
+	// Manage messages here
+	// Parse data
+	msgToInt, _ := strconv.Atoi(message)
+	// Callback
+	go results.PrintTime(msgToInt)
+}
+
+// Event callback
+func onEvent(event string) {
+	// Comprobe
+	switch event {
+	case "CONNECTED": // OnConnected event
+		// Comprobe
+		if !connectedLog {
+			// Print
+			fmt.Printf("Connected to amqp server\n")
+			// Change value
+			connectedLog = true
+		}
+		break
+	case "SUBSCRIBED": // OnSubscribed event
+		// Times
+		results.Init()
+		// Comprobe
+		if !subscribedLog {
+			// Print
+			fmt.Printf("Subscribed to topics\n")
+			// Change value
+			subscribedLog = true
+		}
+		break
+	}
+}
+
 // Main
 func main() {
 	// Log
 	fmt.Printf("AmqpClient on %s with architecture: %s over routines: %d\n", runtime.GOOS, runtime.GOARCH, listeners)
 	// Properties
-	amqpclient.SetProperties(listeners, msgs, printInterval)
+	results.SetProperties(msgs, printInterval)
 	// Start listeners
-	amqpclient.StartListeners(queues)
+	amqpclient.StartListeners(queues, listeners, onMessage, onEvent)
 	// Scan
 	fmt.Scanln()
 }

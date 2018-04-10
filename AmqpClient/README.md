@@ -3,13 +3,14 @@
 ### Some result
 ActiveMQ
 ```sh
+AmqpClient on windows with architecture: amd64 over routines: 4
 Connected to amqp server
 Subscribed to topics
-Processed: 50000, time: 614.4364ms
-Processed: 50000, time: 417.2968ms
-Processed: 50000, time: 419.799ms
-Processed: 50000, time: 628.9478ms
-Processed: 50000, time: 403.2872ms
-Processed: 50000, time: 437.3107ms
-Total time: 2.9220788s total processed: 300000 over routines: 4
+Processed: 50000, time: 488.8635ms
+Processed: 50000, time: 435.3097ms
+Processed: 50000, time: 407.2897ms
+Processed: 50000, time: 469.834ms
+Processed: 50000, time: 429.3061ms
+Processed: 50000, time: 483.8446ms
+Total time: 2.7159485s total processed: 300000
 ```

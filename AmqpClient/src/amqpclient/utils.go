@@ -16,7 +16,7 @@ func printTime(proccesed int) {
 	fmt.Printf("Processed: %d, time: %s\n", printInterval, interval)
 	// Print in finish
 	if proccesed == msgt {
-		fmt.Printf("Total time: %s total processed: %d, routines: %d\n", time.Since(totalTime), msgt, total)
+		fmt.Printf("Total time: %s total processed: %d\n", time.Since(totalTime), msgt)
 	}
 }
 

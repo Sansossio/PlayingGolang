@@ -5,11 +5,11 @@ ActiveMQ
 ```sh
 Connected to amqp server
 Subscribed to topics
-Processed: 50000, time: 1.2322856s
-Processed: 50000, time: 1.0397752s
-Processed: 50000, time: 866.3036ms
-Processed: 50000, time: 951.053ms
-Processed: 50000, time: 927.4663ms
-Processed: 50000, time: 746.9867ms
-Total time: 5.781918s total processed: 300000, routines: 8
+Processed: 50000, time: 614.4364ms
+Processed: 50000, time: 417.2968ms
+Processed: 50000, time: 419.799ms
+Processed: 50000, time: 628.9478ms
+Processed: 50000, time: 403.2872ms
+Processed: 50000, time: 437.3107ms
+Total time: 2.9220788s total processed: 300000 over routines: 4
 ```

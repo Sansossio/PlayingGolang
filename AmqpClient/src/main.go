@@ -3,6 +3,7 @@ package main
 
 // Imports
 import (
+	"encoding/json"
 	"fmt"
 	"runtime"
 	"strconv"
@@ -11,12 +12,18 @@ import (
 	"./results"
 )
 
+// Struct
+type myJSON struct {
+	Number int
+}
+
 // Properties
 var (
 	subscribedLog, connectedLog bool
 	messageAsync                = true
+	receiveJson                 = true
 	listeners                   = runtime.NumCPU()
-	msgs                        = 300000
+	msgs                        = 300 * 1000
 	printInterval               = 50000
 	queues                      = []string{
 		"Consumer.go.VirtualTopic.queue-one",
@@ -25,12 +32,28 @@ var (
 )
 
 // Message callback
-func onMessage(topic, message string) {
+func onMessage(topic string, msg []byte) {
+	// Properties
+	value := 0
 	// Manage messages here
-	// Parse data
-	msgToInt, _ := strconv.Atoi(message)
+	// Parse json
+	if receiveJson {
+		// Json
+		data := myJSON{}
+		// Parse data
+		json.Unmarshal(msg, &data)
+		// Value
+		value = data.Number
+	} else {
+		// Direct convertion
+		message := string(msg)
+		// Parse data
+		msgToInt, _ := strconv.Atoi(message)
+		// Value
+		value = msgToInt
+	}
 	// Callback
-	go results.PrintTime(msgToInt)
+	go results.PrintTime(value)
 }
 
 // Event callback
@@ -70,6 +93,9 @@ func startListeners() {
 
 // Main
 func main() {
+	/* JSONmsg:
+	{"TIPO":"INFO","IDTIPO":"1021","ID":"002161","HD":"16922","HDL":" 39.2","TC":"80000","TCL":" 88","P":"1" ,"UE":"2013-05-18 12:08:22","FUE":"Destacado_BCNT1_A6AdvancedEdition_1920x1080.mov" ,"MUS":"S","CMP3":" 0" ,"CMM":"2","AMP3":"0" ,"CPU":"55","MEM":" 39.2" ,"CANAL":"5","DBM":" -200" ,"TDISP":"10","TS":"2017-02-15 05:00:00"}
+	*/
 	// Log
 	fmt.Printf("AmqpClient on %s with architecture: %s over routines: %d\n", runtime.GOOS, runtime.GOARCH, listeners)
 	// Liteners

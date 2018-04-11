@@ -80,7 +80,7 @@ func loopHandler(receiver *amqp.Receiver, topic string, channel chan error) {
 		// Accept message
 		msg.Accept()
 		// Parse data
-		msgToString := string(msg.GetData())
+		msgToString := msg.GetData()
 		// Handler
 		if messageAsync {
 			// Callback async

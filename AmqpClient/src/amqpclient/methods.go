@@ -41,7 +41,7 @@ func createConsumer(id int, queues []string) Consumer {
 }
 
 // StartListeners Start new listeners
-func StartListeners(queues []string, total int, onMessage func(string, string), onEvent func(string), ca bool) {
+func StartListeners(queues []string, total int, onMessage func(string, []byte), onEvent func(string), ca bool) {
 	// Properties
 	messageAsync, messageCallback, eventCallback = ca, onMessage, onEvent
 	// Loop

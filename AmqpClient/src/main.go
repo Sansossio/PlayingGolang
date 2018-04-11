@@ -21,7 +21,7 @@ type myJSON struct {
 var (
 	subscribedLog, connectedLog bool
 	messageAsync                = true
-	receiveJson                 = true
+	receiveJSON                 = true
 	listeners                   = runtime.NumCPU()
 	msgs                        = 300 * 1000
 	printInterval               = 50000
@@ -37,7 +37,7 @@ func onMessage(topic string, msg []byte) {
 	value := 0
 	// Manage messages here
 	// Parse json
-	if receiveJson {
+	if receiveJSON {
 		// Json
 		data := myJSON{}
 		// Parse data
